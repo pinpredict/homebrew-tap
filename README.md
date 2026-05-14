@@ -2,6 +2,17 @@
 
 Homebrew formulae for PinPredict's CLI tools.
 
+> [!IMPORTANT]
+> The upstream tool repos (`pinpredict/cloudctl`, `pinpredict/cwlogs`, `pinpredict/k4a`) are **private**. Homebrew downloads release assets anonymously by default, which 404s on private repos. You must export a GitHub token with `repo` scope on the org before installing or upgrading:
+>
+> ```sh
+> export HOMEBREW_GITHUB_API_TOKEN=ghp_xxx   # PAT with repo scope, or a fine-grained PAT
+> ```
+>
+> Add it to your shell rc (`~/.zshrc` / `~/.bashrc`) so `brew upgrade` keeps working on subsequent releases. The token is only used to fetch release tarballs — the formulae themselves live in this public tap.
+>
+> Create a PAT at <https://github.com/settings/tokens> (classic, `repo` scope) or <https://github.com/settings/personal-access-tokens/new> (fine-grained, `Contents: Read` on the three repos).
+
 ## Install
 
 ```sh
