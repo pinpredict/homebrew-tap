@@ -6,13 +6,13 @@ require_relative "../lib/custom_download_strategy"
 class Cloudctl < Formula
   desc "Declarative IaC CLI for multi-cloud account management"
   homepage "https://github.com/pinpredict/cloudctl"
-  version "0.2.0"
+  version "0.2.1"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.0/cloudctl_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "27577c175175275666324faedcbe52e301eecb37ad7a55d00f190fc115816f1b"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "47435aa345e8c727ee68efed8a65bc68b70892568909ab33422748fa18c47e9d"
 
       define_method(:install) do
         bin.install "cloudctl"
@@ -22,8 +22,8 @@ class Cloudctl < Formula
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.0/cloudctl_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "deddf754fa1f0f8537b8be3569176156338a05355012cc5bfdea9b0dabcb5074"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "0a2fd22f2dc5f016b37be7aa9d543af5163498cc84e1e005d8826d4eb73871d2"
 
       define_method(:install) do
         bin.install "cloudctl"
@@ -36,8 +36,8 @@ class Cloudctl < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.0/cloudctl_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "ddc867cd159c7567fc5407e2cdd52aaa868b6e55fcf88dad747b5c8ab490cafd"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "a880adc0dcaeaf95beac15ee15f3b291f922cd147b488667ea0ddbdbad6f7181"
       define_method(:install) do
         bin.install "cloudctl"
         bin.install "aws-provider"
@@ -46,8 +46,8 @@ class Cloudctl < Formula
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.0/cloudctl_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "eeea14df72c95880192a018355ed3835a7c9bad0d0002dc2613b9939f689f672"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "5064dd0069cb278a8704122cf98b017ca0dec907f446c7d77c8da27b0a7ca510"
       define_method(:install) do
         bin.install "cloudctl"
         bin.install "aws-provider"
