@@ -6,21 +6,21 @@ require_relative "../lib/custom_download_strategy"
 class K4a < Formula
   desc "Interactive TUI for exploring Kafka clusters (like k9s, for Kafka)"
   homepage "https://github.com/pinpredict/k4a"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/k4a/releases/download/v0.1.0/k4a_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "88b474c0d0fd37249e4055df6af3b29ee567a417ff15571cf58071a5d0216223"
+      url "https://github.com/pinpredict/k4a/releases/download/v0.2.0/k4a_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "c9e6161a49b8d0cddfbf7e1b8071eaa522236afe590f45498cb48eabf848b833"
 
       define_method(:install) do
         bin.install "k4a"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/k4a/releases/download/v0.1.0/k4a_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "85c673bab82fa2d201188f04bfa2e8dc22b5104442db6cce4e15d49fcee934e8"
+      url "https://github.com/pinpredict/k4a/releases/download/v0.2.0/k4a_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "84d49fb94d4a7ccb9967a35bf73a2b62397048375cf5da615d5aaf8c40634039"
 
       define_method(:install) do
         bin.install "k4a"
@@ -30,15 +30,15 @@ class K4a < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/k4a/releases/download/v0.1.0/k4a_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "858222fcc5581df1b1d731ea1ebcfd18bf8e4a7a91ea781f298abafcb1630a32"
+      url "https://github.com/pinpredict/k4a/releases/download/v0.2.0/k4a_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "1d219959babae352faa04a599b9214fdd127fd4c09ebc1df44a6939c57ee707b"
       define_method(:install) do
         bin.install "k4a"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/k4a/releases/download/v0.1.0/k4a_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "79cf7558241e8a2bff3af37f4605230722232b61e5b30988263c3f81260f2055"
+      url "https://github.com/pinpredict/k4a/releases/download/v0.2.0/k4a_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "0dd55e347b0cb8109d9a41884977d070a0ccd5b39dbc7a2b70e04d2c7863bf42"
       define_method(:install) do
         bin.install "k4a"
       end
