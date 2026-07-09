@@ -3,15 +3,15 @@
 Homebrew formulae for PinPredict's CLI tools.
 
 > [!IMPORTANT]
-> The upstream tool repos (`pinpredict/cloudctl`, `pinpredict/cwlogs`, `pinpredict/k4a`) are **private**. Homebrew downloads release assets anonymously by default, which 404s on private repos. You must export a GitHub token with `repo` scope on the org before installing or upgrading:
+> The upstream tool repos (`pinpredict/cloudctl`, `pinpredict/cwlogs`, `pinpredict/k4a`) are **private**, so downloads must authenticate. If you're logged in to the [GitHub CLI](https://cli.github.com) (`gh auth login`) this Just Works — the download strategy uses your `gh` credentials automatically. Only used to fetch release tarballs; the formulae themselves live in this public tap.
+>
+> To use a dedicated token instead, export one and it takes precedence over `gh`:
 >
 > ```sh
-> export HOMEBREW_GITHUB_API_TOKEN=ghp_xxx   # PAT with repo scope, or a fine-grained PAT
+> export HOMEBREW_GITHUB_API_TOKEN=ghp_xxx
 > ```
 >
-> Add it to your shell rc (`~/.zshrc` / `~/.bashrc`) so `brew upgrade` keeps working on subsequent releases. The token is only used to fetch release tarballs — the formulae themselves live in this public tap.
->
-> Create a PAT at <https://github.com/settings/tokens> (classic, `repo` scope) or <https://github.com/settings/personal-access-tokens/new> (fine-grained, `Contents: Read` on the three repos).
+> Create it at <https://github.com/settings/tokens> (classic, `repo` scope) or <https://github.com/settings/personal-access-tokens/new> (fine-grained, `Contents: Read` on the three repos, **resource owner: pinpredict** — a fine-grained PAT owned by your personal account cannot see org repos and fails with a 404).
 
 ## Install
 
