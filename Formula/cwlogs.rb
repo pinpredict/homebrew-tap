@@ -6,21 +6,21 @@ require_relative "../lib/custom_download_strategy"
 class Cwlogs < Formula
   desc "Tail AWS CloudWatch container logs with colorized output"
   homepage "https://github.com/pinpredict/cwlogs"
-  version "0.0.3"
+  version "0.1.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/cwlogs/releases/download/v0.0.3/cwlogs_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "516ea5719f61bc6ba5b597dbe33c3343cf56e96075a01bc0c43bcbfd6b02867e"
+      url "https://github.com/pinpredict/cwlogs/releases/download/v0.1.0/cwlogs_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "0b39172d70d8ff32d0ff5b932c67c74d0bf1038e97b7f17dc277945e92993e03"
 
       define_method(:install) do
         bin.install "cwlogs"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/cwlogs/releases/download/v0.0.3/cwlogs_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "b7f718d4b6ef7e4f491f3da0351d29be624a55d78d7b840e2c3bdced9ed02d64"
+      url "https://github.com/pinpredict/cwlogs/releases/download/v0.1.0/cwlogs_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "6874d4ebd2029171b73b25a5f3cd214be7bf9caca09a8305cd9c0cbb8c73094b"
 
       define_method(:install) do
         bin.install "cwlogs"
@@ -30,15 +30,15 @@ class Cwlogs < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cwlogs/releases/download/v0.0.3/cwlogs_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "cc3d0eb3fb470c18dcd4911a925de017778337fda9a7484f11301a61f3fe2de5"
+      url "https://github.com/pinpredict/cwlogs/releases/download/v0.1.0/cwlogs_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "7634bf3e9fa98d296b0cde9c5063deb7bb5edb6e78f6a2900783fb524d6665dd"
       define_method(:install) do
         bin.install "cwlogs"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cwlogs/releases/download/v0.0.3/cwlogs_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "89e55ca66db670bfd6f1d79ef8c9fda08f269a3dd4eb1698a154690f94d4d1ea"
+      url "https://github.com/pinpredict/cwlogs/releases/download/v0.1.0/cwlogs_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "07f60cfddee9338e6904cc40df31252a13194ef8acc5919ffa6c55da64acd41d"
       define_method(:install) do
         bin.install "cwlogs"
       end
