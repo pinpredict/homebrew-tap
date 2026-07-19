@@ -6,21 +6,21 @@ require_relative "../lib/custom_download_strategy"
 class ChaosLab < Formula
   desc "Polyglot chaos orchestrator — scenarios in any language, one CLI/TUI"
   homepage "https://github.com/pinpredict/chaos-lab"
-  version "0.0.5"
+  version "0.0.6"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.5/chaos-lab_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "7ab90ad28af14bd7de0bc02f3ce15d5fc689b971235fc2e7eae5003e31a669ec"
+      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.6/chaos-lab_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "cfca019da44d1c8057c876d701bda3c7193521c8b6e53a3797549a684e66369b"
 
       define_method(:install) do
         bin.install "chaos-lab"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.5/chaos-lab_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "f6865d8769913cb49f61c30538e841793b44d858b2efa5d51e8742f8d6695a25"
+      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.6/chaos-lab_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "eddeaa413c9a2e8c209c37b1157cd48e5fab971bacacb3b1af900aa5353c8ab8"
 
       define_method(:install) do
         bin.install "chaos-lab"
@@ -30,15 +30,15 @@ class ChaosLab < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.5/chaos-lab_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "56695df060ffd9dc73e03521d70353b82c06d54b3f555c631e3267961572e577"
+      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.6/chaos-lab_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "bd44a5f60853067f33d1d814d66a13e4824cbdcbcd9335bccd2d19fdfd875d26"
       define_method(:install) do
         bin.install "chaos-lab"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.5/chaos-lab_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "e4efc0b915fe35a4c0e14d4d1051a878679160fc6601496044d47ccfeb15433f"
+      url "https://github.com/pinpredict/chaos-lab/releases/download/v0.0.6/chaos-lab_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "403079b41fb58a954ff780230e41af441ebfff07950c15cbe1602e9f133681b7"
       define_method(:install) do
         bin.install "chaos-lab"
       end
