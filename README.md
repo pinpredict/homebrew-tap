@@ -35,7 +35,7 @@ brew install pinpredict/tap/pp-tui
 ```
 
 > If you have `chaos-lab` installed from this tap, `brew uninstall chaos-lab` —
-> it has been replaced by `k5s`.
+> use `k5s` instead.
 
 ## Available formulae
 
