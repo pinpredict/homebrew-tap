@@ -6,58 +6,55 @@ require_relative "../lib/custom_download_strategy"
 class Cloudctl < Formula
   desc "Declarative IaC CLI for multi-cloud account management"
   homepage "https://github.com/pinpredict/cloudctl"
-  version "0.2.1"
+  version "0.3.0"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "47435aa345e8c727ee68efed8a65bc68b70892568909ab33422748fa18c47e9d"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.3.0/cloudctl_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "9ac906e874d92b6c8f056365d08a6b1f7031bad582c63e70be3dce40ba9cf10b"
 
       define_method(:install) do
         bin.install "cloudctl"
-        bin.install "aws-provider"
-        bin.install "azure-provider"
-        bin.install "terraform-generator"
+        (libexec/"plugins").install "aws-provider", "azure-provider",
+                                    "terraform-generator", "infracost-estimator"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "0a2fd22f2dc5f016b37be7aa9d543af5163498cc84e1e005d8826d4eb73871d2"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.3.0/cloudctl_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "f9d8f2381b3bd470190e3d2f76d1cd76811b5fc916b05d7950489c1a5cdf77e4"
 
       define_method(:install) do
         bin.install "cloudctl"
-        bin.install "aws-provider"
-        bin.install "azure-provider"
-        bin.install "terraform-generator"
+        (libexec/"plugins").install "aws-provider", "azure-provider",
+                                    "terraform-generator", "infracost-estimator"
       end
     end
   end
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "a880adc0dcaeaf95beac15ee15f3b291f922cd147b488667ea0ddbdbad6f7181"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.3.0/cloudctl_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "15bea1f0e2f444b7d1900cd679cda5c6a606e4f336dd986443fab53e5aee3e41"
       define_method(:install) do
         bin.install "cloudctl"
-        bin.install "aws-provider"
-        bin.install "azure-provider"
-        bin.install "terraform-generator"
+        (libexec/"plugins").install "aws-provider", "azure-provider",
+                                    "terraform-generator", "infracost-estimator"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/cloudctl/releases/download/v0.2.1/cloudctl_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "5064dd0069cb278a8704122cf98b017ca0dec907f446c7d77c8da27b0a7ca510"
+      url "https://github.com/pinpredict/cloudctl/releases/download/v0.3.0/cloudctl_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "ac86e547bfc08a0ae6c30ba45e25f969b5703cd8dd73a46470f3b4b36f9f0a25"
       define_method(:install) do
         bin.install "cloudctl"
-        bin.install "aws-provider"
-        bin.install "azure-provider"
-        bin.install "terraform-generator"
+        (libexec/"plugins").install "aws-provider", "azure-provider",
+                                    "terraform-generator", "infracost-estimator"
       end
     end
   end
 
   test do
     system "#{bin}/cloudctl", "version"
+    assert_match "aws-provider", shell_output("#{bin}/cloudctl plugin list")
   end
 end
