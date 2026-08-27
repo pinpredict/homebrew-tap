@@ -6,21 +6,21 @@ require_relative "../lib/custom_download_strategy"
 class K5s < Formula
   desc "Kubernetes dev environments + polyglot chaos verification — one CLI/TUI"
   homepage "https://github.com/pinpredict/k5s"
-  version "0.0.38"
+  version "0.0.39"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.intel?
-      url "https://github.com/pinpredict/k5s/releases/download/v0.0.38/k5s_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "1d602769e4da14bfd41d123e4e59b795122b4daff94406efb6d0577b711e2ad7"
+      url "https://github.com/pinpredict/k5s/releases/download/v0.0.39/k5s_Darwin_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "741e9dde0bbab0c36ba5da88d5ac9fd538758871d8a2b8abccd8e6d07aa88350"
 
       define_method(:install) do
         bin.install "k5s", "exec-scenario"
       end
     end
     if Hardware::CPU.arm?
-      url "https://github.com/pinpredict/k5s/releases/download/v0.0.38/k5s_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "0f54380bb5ec4ab1d1a971fec818fee0db4e24d932cd8f639f905017baaa083c"
+      url "https://github.com/pinpredict/k5s/releases/download/v0.0.39/k5s_Darwin_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "f3e6572c0574080749d1e5692e8541fad3a094f6f8fdb8c1b4ed7116edd30cf8"
 
       define_method(:install) do
         bin.install "k5s", "exec-scenario"
@@ -30,15 +30,15 @@ class K5s < Formula
 
   on_linux do
     if Hardware::CPU.intel? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/k5s/releases/download/v0.0.38/k5s_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "12fe586c43970185aeef62eb535c51c24e8e10f6567ce236d5186dd1b771012c"
+      url "https://github.com/pinpredict/k5s/releases/download/v0.0.39/k5s_Linux_x86_64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "61b743afd2053009ee6aa0b8f4e986b0d5bf180c5e330587bb2ec0f72b590044"
       define_method(:install) do
         bin.install "k5s", "exec-scenario"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
-      url "https://github.com/pinpredict/k5s/releases/download/v0.0.38/k5s_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
-      sha256 "821747b05585bcb7ba6c7b13dda3698c147eb9b3d08a47066cadfd60b781a7c9"
+      url "https://github.com/pinpredict/k5s/releases/download/v0.0.39/k5s_Linux_arm64.tar.gz", using: GitHubPrivateRepositoryReleaseDownloadStrategy
+      sha256 "611222746483c9651c3d52c0364caa3d8edd9807fe4aa9720b77fb6fa5b81198"
       define_method(:install) do
         bin.install "k5s", "exec-scenario"
       end
