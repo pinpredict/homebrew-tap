@@ -20,7 +20,7 @@ brew tap pinpredict/tap
 brew install cloudctl
 brew install cwlogs
 brew install k4a
-brew install k5s
+brew install k5
 brew install pp-tui
 ```
 
@@ -30,12 +30,19 @@ Or in one shot:
 brew install pinpredict/tap/cloudctl
 brew install pinpredict/tap/cwlogs
 brew install pinpredict/tap/k4a
-brew install pinpredict/tap/k5s
+brew install pinpredict/tap/k5
 brew install pinpredict/tap/pp-tui
 ```
 
+> **`k5s` was renamed to `k5`.** `brew install k5s` still works — `Aliases/k5s`
+> points at `Formula/k5.rb` — and the installed `k5s` command still works, because
+> the formula lays it down as a symlink beside `k5`. If you already have the old
+> formula installed, `brew uninstall k5s && brew install k5`: the alias makes the
+> name resolve, but the keg you have is a separate one and will keep reporting the
+> version it was installed at.
+>
 > If you have `chaos-lab` installed from this tap, `brew uninstall chaos-lab` —
-> use `k5s` instead.
+> use `k5` instead.
 
 ## Available formulae
 
@@ -44,7 +51,7 @@ brew install pinpredict/tap/pp-tui
 | [cloudctl](Formula/cloudctl.rb) | Declarative IaC CLI for multi-cloud account management | [pinpredict/cloudctl](https://github.com/pinpredict/cloudctl) |
 | [cwlogs](Formula/cwlogs.rb) | Tail AWS CloudWatch container logs with colorized output | [pinpredict/cwlogs](https://github.com/pinpredict/cwlogs) |
 | [k4a](Formula/k4a.rb) | Interactive TUI for exploring Kafka clusters | [pinpredict/k4a](https://github.com/pinpredict/k4a) |
-| [k5s](Formula/k5s.rb) | Kubernetes dev environments + polyglot chaos verification — one CLI/TUI | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
+| [k5](Formula/k5.rb) (alias: `k5s`) | Kubernetes dev environments + polyglot chaos verification — one CLI/TUI | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
 | [pp-tui](Formula/pp-tui.rb) | Read-only TUI for watching PinPredict trading activity in real time | [pinpredict/pp-tui](https://github.com/pinpredict/pp-tui) |
 
 ## How it works
@@ -57,5 +64,19 @@ Each upstream repo publishes its formula here on release via GoReleaser's `brews
 
 ```sh
 brew update
-brew upgrade cloudctl cwlogs k4a k5s pp-tui
+brew upgrade cloudctl cwlogs k4a k5 pp-tui
 ```
+
+## Aliases
+
+`Aliases/<name>` is a symlink to the `Formula/` file it stands in for, so a
+renamed tool keeps its old install name working:
+
+| Alias | Formula | Why |
+|---|---|---|
+| `k5s` | `k5` | `k5s` was renamed to `k5`; the old name is kept indefinitely |
+
+An alias only covers `brew install k5s` — the *command* on `$PATH` is a separate
+thing, laid down by the formula itself (`bin.install_symlink bin/"k5" => "k5s"`).
+Both halves are needed: without the alias `brew install k5s` fails, and without
+the symlink an existing `k5s up` in a script fails.
