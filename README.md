@@ -38,10 +38,11 @@ brew install pinpredict/tap/pp-tui
 > `k5`; `brew install k5s` gives you `k5` **plus** `k5s` as a link to it, because
 > `k5s` is now a transitional formula that depends on `k5`.
 >
-> **If you already have `k5s` installed, just `brew update && brew upgrade k5s`** —
-> it upgrades in place and pulls `k5` in. If the upgrade stops on a link conflict
-> over `k5s` or `exec-scenario` (the old keg owns those paths), clear it once with
-> `brew uninstall k5s && brew install k5s`. That is a one-time step.
+> **If you already have `k5s` installed, `brew update && brew upgrade k5s` is all
+> you need.** Verified on a real 0.0.77 install: it pulls `k5` in as a dependency,
+> replaces the old keg, and leaves both commands working. No uninstall, no link
+> conflict — brew removes the old keg's links before linking `k5`, so the two
+> never contend for `bin/exec-scenario`.
 >
 > If you have `chaos-lab` installed from this tap, `brew uninstall chaos-lab` —
 > use `k5` instead.

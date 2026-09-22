@@ -7,10 +7,24 @@
 #
 # It should never need touching again. It carries no version of its own (1.0.0,
 # forever) and no copy of the binary: `brew upgrade k5s` upgrades its DEPENDENCY,
-# which is where the real versions live. The url is this tap pinned at a commit
-# purely because Homebrew refuses to load a formula with no url at all
-# ("formula requires at least a URL") — nothing is built from it, and a pinned
-# git revision avoids a sha256 that would have to be re-checksummed.
+# which is where the real versions live.
+#
+# The url is a pinned TARBALL of this tap, and nothing is built from it — it
+# exists only because Homebrew refuses to load a formula with no url at all
+# ("formula requires at least a URL").
+#
+# ⚠ IT MUST NOT BE A `url ..., using: :git` / `.git` SOURCE, which is what this
+# formula shipped first and which FAILED for everyone in this org. Homebrew
+# clones a git url, our git config rewrites github.com HTTPS to SSH via
+# `insteadOf`, and brew's sandbox denies reading ~/.ssh/known_hosts:
+#
+#     hostkeys_find_by_key_hostfile: hostkeys_foreach failed for
+#     /Users/<user>/.ssh/known_hosts: Operation not permitted
+#     Host key verification failed.
+#     fatal: Could not read from remote repository.
+#
+# `brew upgrade k5s` then did nothing at all. A tarball is fetched with curl, so
+# no git config and no SSH is involved. The tap is public, so no auth either.
 #
 # Why this instead of an Aliases/k5s symlink, which is the more obvious answer:
 # an alias makes `brew install k5s` RESOLVE to k5, but it does not migrate a keg
@@ -28,7 +42,8 @@
 class K5s < Formula
   desc "Transitional package: k5s was renamed to k5, which this installs"
   homepage "https://github.com/pinpredict/k5s"
-  url "https://github.com/pinpredict/homebrew-tap.git", revision: "33f02f05a8d61889c414496647f25fa0cb027fc1"
+  url "https://github.com/pinpredict/homebrew-tap/archive/69f915a1f0471666c1aa005b234ff9be2f90a6dc.tar.gz"
+  sha256 "0f4c5d4da03289892443ddef4cc40ec43c7d54503f716efd85d06077d74ac006"
   version "1.0.0"
   license "MIT"
 
