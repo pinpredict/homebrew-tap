@@ -8,15 +8,16 @@
 # The tool was renamed k5s -> k5. The rename lands in the upstream repo first, so
 # until a release ships under the new name the only archives that exist are the
 # v0.0.77 ones, which carry a binary called `k5s`. Rather than gate this formula
-# on a release — which would leave `brew install k5` broken in the meantime, or
-# leave the Aliases/k5s symlink dangling — it installs the existing archive and
-# renames the binary on the way in. Same bytes, new name.
+# on a release — which would leave `brew install k5` broken in the meantime — it
+# installs the existing archive and renames the binary on the way in with
+# `bin.install "k5s" => "k5"`. Same bytes, same sha256s, new name.
 #
-# Both command names are laid down on purpose, and they are two different
-# mechanisms that are easy to confuse:
-#   * Aliases/k5s -> this file     makes `brew install k5s` resolve
-#   * the symlink below            makes `k5s up` work on $PATH
-# Either one alone leaves half the rename broken.
+# ⚠ This formula owns `k5` and `exec-scenario` and NOTHING ELSE. The old `k5s`
+# command is a separate formula (Formula/k5s.rb) that depends on this one and
+# lays that name down itself. It is NOT a `bin.install_symlink` here: two
+# formulae may not own the same path, and with a k5s keg installed — which
+# everyone on the team has — a k5 that also claimed bin/k5s failed to link.
+# See the comment in k5s.rb for the measured failure.
 require_relative "../lib/custom_download_strategy"
 class K5 < Formula
   desc "Kubernetes dev environments + polyglot chaos verification — one CLI/TUI"
@@ -32,7 +33,6 @@ class K5 < Formula
       define_method(:install) do
         bin.install "k5s" => "k5"
         bin.install "exec-scenario"
-        bin.install_symlink bin/"k5" => "k5s"
       end
     end
     if Hardware::CPU.arm?
@@ -42,7 +42,6 @@ class K5 < Formula
       define_method(:install) do
         bin.install "k5s" => "k5"
         bin.install "exec-scenario"
-        bin.install_symlink bin/"k5" => "k5s"
       end
     end
   end
@@ -54,7 +53,6 @@ class K5 < Formula
       define_method(:install) do
         bin.install "k5s" => "k5"
         bin.install "exec-scenario"
-        bin.install_symlink bin/"k5" => "k5s"
       end
     end
     if Hardware::CPU.arm? && Hardware::CPU.is_64_bit?
@@ -63,14 +61,12 @@ class K5 < Formula
       define_method(:install) do
         bin.install "k5s" => "k5"
         bin.install "exec-scenario"
-        bin.install_symlink bin/"k5" => "k5s"
       end
     end
   end
 
   test do
     system "#{bin}/k5", "version"
-    system "#{bin}/k5s", "version"
     assert_predicate bin/"exec-scenario", :executable?
   end
 end
