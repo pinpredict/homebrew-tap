@@ -3,7 +3,7 @@
 Homebrew formulae for PinPredict's CLI tools.
 
 > [!IMPORTANT]
-> The upstream tool repos (`pinpredict/cloudctl`, `pinpredict/cwlogs`, `pinpredict/k4a`, `pinpredict/k5s`, `pinpredict/pp-tui`) are **private**, so downloads must authenticate. If you're logged in to the [GitHub CLI](https://cli.github.com) (`gh auth login`) this Just Works — the download strategy uses your `gh` credentials automatically. Only used to fetch release tarballs; the formulae themselves live in this public tap.
+> The upstream tool repos (`pinpredict/cloudctl`, `pinpredict/cwlogs`, `pinpredict/k4a`, `pinpredict/k5s`) are **private**, so downloads must authenticate. If you're logged in to the [GitHub CLI](https://cli.github.com) (`gh auth login`) this Just Works — the download strategy uses your `gh` credentials automatically. Only used to fetch release tarballs; the formulae themselves live in this public tap.
 >
 > To use a dedicated token instead, export one and it takes precedence over `gh`:
 >
@@ -21,7 +21,6 @@ brew install cloudctl
 brew install cwlogs
 brew install k4a
 brew install k5
-brew install pp-tui
 ```
 
 Or in one shot:
@@ -31,7 +30,6 @@ brew install pinpredict/tap/cloudctl
 brew install pinpredict/tap/cwlogs
 brew install pinpredict/tap/k4a
 brew install pinpredict/tap/k5
-brew install pinpredict/tap/pp-tui
 ```
 
 > **`k5s` was renamed to `k5`.** Both commands work. `brew install k5` gives you
@@ -56,7 +54,6 @@ brew install pinpredict/tap/pp-tui
 | [k4a](Formula/k4a.rb) | Interactive TUI for exploring Kafka clusters | [pinpredict/k4a](https://github.com/pinpredict/k4a) |
 | [k5](Formula/k5.rb) | Kubernetes dev environments + polyglot chaos verification — one CLI/TUI | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
 | [k5s](Formula/k5s.rb) | Transitional — installs `k5` and provides `k5s` as a link to it | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
-| [pp-tui](Formula/pp-tui.rb) | Read-only TUI for watching PinPredict trading activity in real time | [pinpredict/pp-tui](https://github.com/pinpredict/pp-tui) |
 
 ## How it works
 
@@ -68,7 +65,7 @@ Each upstream repo publishes its formula here on release via GoReleaser's `brews
 
 ```sh
 brew update
-brew upgrade cloudctl cwlogs k4a k5 pp-tui
+brew upgrade cloudctl cwlogs k4a k5
 ```
 
 ## Renamed tools
