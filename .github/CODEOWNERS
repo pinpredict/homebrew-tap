@@ -1,0 +1,23 @@
+# CODEOWNERS — automatic reviewer assignment for pinpredict/homebrew-tap
+#
+# Without this file nothing requests a reviewer, so every review has to be
+# asked for by hand. GitHub's scheduled reminders also key off review requests.
+#
+# Syntax: last matching pattern wins; listing several owners requests all of
+# them. GitHub never requests review from the PR's own author, so an owner who
+# opens a PR simply drops out of that one. Last-match-wins is per FILE: a PR
+# that touches two areas requests both lists.
+#
+# Owners are individual GitHub handles, never org teams. Every area has at
+# least two, so nothing blocks on one person and a sole author's own PRs still
+# get a reviewer.
+#
+# Formulae for the org's CLIs (cloudctl, cwlogs, k5s). Version bumps are
+# pushed straight to main by pinpredict-bot from each tool's release
+# workflow, so they never open a PR and this file does not slow them down.
+# Hand edits to the formulae, the download strategy or the tap migrations go
+# through the platform pair.
+#
+# Engineers: blairham (Blair), emersonboyd (Emerson).
+
+*                                   @blairham @emersonboyd
