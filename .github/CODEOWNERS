@@ -12,11 +12,11 @@
 # least two, so nothing blocks on one person and a sole author's own PRs still
 # get a reviewer.
 #
-# Formulae for the org's CLIs (cloudctl, cwlogs, k5s). Version bumps are
+# Formulae for the org's CLIs (cloudctl, cwlogs, k4a, k5s). Version bumps are
 # pushed straight to main by pinpredict-bot from each tool's release
-# workflow, so they never open a PR and this file does not slow them down.
-# Hand edits to the formulae, the download strategy or the tap migrations go
-# through the platform pair.
+# workflow, and k4a's by the sync-k4a workflow, so they never open a PR and
+# this file does not slow them down. Hand edits to the formulae, the download
+# strategy or the sync workflow go through the platform pair.
 #
 # Engineers: blairham (Blair), emersonboyd (Emerson).
 

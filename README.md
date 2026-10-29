@@ -11,7 +11,9 @@ Homebrew formulae for PinPredict's CLI tools.
 > export HOMEBREW_GITHUB_API_TOKEN=ghp_xxx
 > ```
 >
-> Create it at <https://github.com/settings/tokens> (classic, `repo` scope) or <https://github.com/settings/personal-access-tokens/new> (fine-grained, `Contents: Read` on every repo in the [Available formulae](#available-formulae) table below, **resource owner: pinpredict** — a fine-grained PAT owned by your personal account cannot see org repos and fails with a 404).
+> Create it at <https://github.com/settings/tokens> (classic, `repo` scope) or <https://github.com/settings/personal-access-tokens/new> (fine-grained, `Contents: Read` on every `pinpredict/*` repo in the [Available formulae](#available-formulae) table below, **resource owner: pinpredict** — a fine-grained PAT owned by your personal account cannot see org repos and fails with a 404).
+>
+> `k4a` needs neither: its releases are public.
 
 ## Install
 
@@ -19,6 +21,7 @@ Homebrew formulae for PinPredict's CLI tools.
 brew tap pinpredict/tap
 brew install cloudctl
 brew install cwlogs
+brew install k4a
 brew install k5
 ```
 
@@ -27,6 +30,7 @@ Or in one shot:
 ```sh
 brew install pinpredict/tap/cloudctl
 brew install pinpredict/tap/cwlogs
+brew install pinpredict/tap/k4a
 brew install pinpredict/tap/k5
 ```
 
@@ -49,12 +53,13 @@ brew install pinpredict/tap/k5
 |---------|-------------|--------|
 | [cloudctl](Formula/cloudctl.rb) | Declarative IaC CLI for multi-cloud account management | [pinpredict/cloudctl](https://github.com/pinpredict/cloudctl) |
 | [cwlogs](Formula/cwlogs.rb) | Tail AWS CloudWatch container logs with colorized output | [pinpredict/cwlogs](https://github.com/pinpredict/cwlogs) |
+| [k4a](Formula/k4a.rb) | Terminal UI for Kafka clusters, in the style of k9s | [blairham/k4a](https://github.com/blairham/k4a), mirrored from [blairham/tap](https://github.com/blairham/homebrew-tap) |
 | [k5](Formula/k5.rb) | Kubernetes dev environments + polyglot chaos verification — one CLI/TUI | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
 | [k5s](Formula/k5s.rb) | Transitional — installs `k5` and provides `k5s` as a link to it | [pinpredict/k5s](https://github.com/pinpredict/k5s) |
 
 ## How it works
 
-Each upstream repo publishes its formula here on release via GoReleaser's `brews:` block. Formula updates are committed by a GitHub Actions bot using a PAT stored as `HOMEBREW_TAP_TOKEN` in each upstream repo.
+Each upstream repo publishes its formula here on release via GoReleaser's `brews:` block. Formula updates are committed by a GitHub Actions bot using a PAT stored as `HOMEBREW_TAP_TOKEN` in each upstream repo. `k4a` is the exception: it is mirrored from another tap, see [Mirrored tools](#mirrored-tools).
 
 **A pushed tag with no GitHub release produces no formula bump.** GoReleaser runs off the release, not the tag, so tagging alone leaves the formula on the previous version. `cloudctl` is the live example: `v0.3.0` is tagged upstream but was never released, which is why `Formula/cloudctl.rb` correctly sits at `0.2.1`. If a formula looks stale, check `gh release list --repo pinpredict/<tool>` before assuming the publish job broke.
 
@@ -65,18 +70,32 @@ brew update
 brew upgrade cloudctl cwlogs k5
 ```
 
-## Moved tools
+## Mirrored tools
 
-`k4a` moved to [blairham/k4a](https://github.com/blairham/k4a) and is now
-published to the [`blairham/tap`](https://github.com/blairham/homebrew-tap) tap:
+`k4a` is developed at [blairham/k4a](https://github.com/blairham/k4a) (the old
+`pinpredict/k4a` repo is archived), and its release publishes the formula to the
+[`blairham/tap`](https://github.com/blairham/homebrew-tap) tap. `Formula/k4a.rb`
+here is a byte-for-byte copy of that file, kept current by the
+[`sync-k4a`](.github/workflows/sync-k4a.yaml) workflow: hourly, or on demand from
+the Actions tab. A k4a release lands here within the hour, as a
+`chore(k4a): sync formula to v<x> from blairham/tap@<sha>` commit.
 
-```sh
-brew install blairham/tap/k4a
+**Never hand-edit `Formula/k4a.rb`.** The next sync overwrites it. Change the
+formula in blairham/k4a's `.goreleaser.yaml` instead.
+
+Both taps serve the same file, so it does not matter which one your k4a came
+from. But with **both** taps tapped, Homebrew refuses the bare name:
+
+```
+Error: Formulae found in multiple taps:
+       * blairham/tap/k4a
+       * pinpredict/tap/k4a
 ```
 
-`tap_migrations.json` maps `k4a` to `blairham/tap`, so an existing
-`pinpredict/tap/k4a` install is moved over by `brew update` with no uninstall.
-The old `pinpredict/k4a` repo is archived.
+That is everyone who installed k4a before this mirror existed: the old
+`tap_migrations.json` redirect tapped `blairham/tap` for you and moved your
+install there. Name the tap your install came from, `brew upgrade blairham/tap/k4a`;
+a bare `brew upgrade` with no arguments is unaffected.
 
 ## Renamed tools
 

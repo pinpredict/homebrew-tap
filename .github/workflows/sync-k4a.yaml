@@ -1,0 +1,76 @@
+name: sync-k4a
+
+# k4a lives at blairham/k4a, and its release publishes Formula/k4a.rb to
+# blairham/homebrew-tap (GoReleaser `brews:`). This tap carries a verbatim
+# mirror of that file so `brew install pinpredict/tap/k4a` works without
+# tapping blairham/tap. Mirroring here, rather than a second GoReleaser target
+# in blairham/k4a, keeps a write token for this tap out of a personal repo.
+#
+# The copy is byte-for-byte, so never hand-edit Formula/k4a.rb here: the next
+# run overwrites it. Change the formula in blairham/k4a's .goreleaser.yaml.
+#
+# Hourly, so a k4a release lands here within the hour; run it by hand
+# (workflow_dispatch) to pull one in now. A run with nothing new is a no-op.
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-k4a
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      # Fetch at the commit that last touched the file, so the commit below
+      # names exactly which upstream revision it copied.
+      - name: Fetch blairham/tap's Formula/k4a.rb
+        id: fetch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          sha=$(gh api 'repos/blairham/homebrew-tap/commits?path=Formula/k4a.rb&per_page=1' --jq '.[0].sha')
+          gh api "repos/blairham/homebrew-tap/contents/Formula/k4a.rb?ref=${sha}" \
+            -H 'Accept: application/vnd.github.raw' > "${RUNNER_TEMP}/k4a.rb"
+          echo "sha=${sha}" >> "${GITHUB_OUTPUT}"
+
+      # Every user's brew runs this file. Refuse a truncated fetch, or a
+      # formula that stopped being k4a's or downloads from anywhere but
+      # blairham/k4a's releases, rather than mirroring it.
+      - name: Check it is still k4a's formula
+        run: |
+          set -euo pipefail
+          f="${RUNNER_TEMP}/k4a.rb"
+          ruby -c "${f}"
+          grep -qx 'class K4a < Formula' "${f}"
+          urls=$(grep -E '^[[:space:]]*url ' "${f}")
+          if grep -v 'url "https://github.com/blairham/k4a/releases/download/' <<<"${urls}"; then
+            echo "::error::Formula/k4a.rb has a url outside blairham/k4a's releases"
+            exit 1
+          fi
+
+      - name: Commit and push if it changed
+        env:
+          SHA: ${{ steps.fetch.outputs.sha }}
+        run: |
+          set -euo pipefail
+          cp "${RUNNER_TEMP}/k4a.rb" Formula/k4a.rb
+          if git diff --quiet -- Formula/k4a.rb; then
+            echo "Formula/k4a.rb already matches blairham/tap@${SHA:0:8}"
+            exit 0
+          fi
+          version=$(sed -n 's/^  version "\(.*\)"$/\1/p' Formula/k4a.rb)
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -q -m "chore(k4a): sync formula to v${version} from blairham/tap@${SHA:0:8}" -- Formula/k4a.rb
+          # The tools' GoReleaser bumps also push straight to main.
+          git pull -q --rebase origin main
+          git push origin HEAD:main
